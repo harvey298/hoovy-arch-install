@@ -7,7 +7,9 @@ mount $12 /mnt
 mkdir /mnt/home
 mkdir /mnt/etc
 genfstab -U -p /mnt >> /mnt/etc/fstab
-pactrap -i /mnt base linux-zen linux-zen-headers linux-firmware plasma plasma-meta networkmanager nano openssh base-devel grub firefox efibootmgr
+pactrap -i /mnt base linux-zen linux-zen-headers linux-firmware plasma plasma-meta networkmanager nano openssh base-devel grub firefox efibootmgr rustup
+arch-chroot /mnt rustup toolchain install stable
+arch-chroot /mnt git clone https://github.com/harvey298/aurpm.git;cd aurpm;make;cp target/release/aurpm /usr/bin/;cd ..
 arch-chroot /mnt systemctl enable NetworkManager;systemctl enable sshd;mkinitcpio -p linux-zen
 arch-chroot /mnt passwd
 arch-chroot /mnt useradd -m -g users -G wheel $2
